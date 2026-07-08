@@ -55,6 +55,41 @@ python3 scripts/rym_import.py
 
 Matches collected albums against tracks in `~/.rymmer/rymmer.db` by artist + title and upserts RYM metadata (`rym_rating`, `rym_rank`, `rym_genres`, `rym_descriptors`, `rym_url`).
 
+## Automated browsing (batch collection)
+
+To collect a list of albums automatically, use `rym_browse.py`. It opens Chrome, searches for each artist, filters the discography, and clicks through to each album page so the extension can collect.
+
+### Setup
+
+Start Chrome with remote debugging enabled (quit Chrome first):
+
+```bash
+/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222 --user-data-dir=/tmp/chrome-rym
+```
+
+Log into RYM in that window and load the extension (`chrome://extensions` → Load unpacked → `rym-extension/`).
+
+Install Playwright:
+
+```bash
+pip install playwright && playwright install chromium
+```
+
+### Run
+
+Single album:
+```bash
+python3 scripts/rym_browse.py https://rateyourmusic.com/release/album/maren-morris/hero/
+```
+
+Batch from file (one URL per line):
+```bash
+python3 scripts/rym_browse.py --file urls.txt
+```
+
+For each URL it: searches the artist from the RYM home page → visits the artist page → filters the discography → clicks the album → waits for the extension to collect.
+
 ## Requirements
 
-Python 3.6+ — no pip installs needed (stdlib only).
+- Python 3.6+ (stdlib only) for `rym_server.py` and `rym_import.py`
+- `pip install playwright` for `rym_browse.py`
