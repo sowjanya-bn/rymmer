@@ -61,11 +61,23 @@ To collect a list of albums automatically, use `rym_browse.py`. It opens Chrome,
 
 ### Setup
 
-Start Chrome with remote debugging enabled (quit Chrome first):
+Start Chrome with remote debugging enabled (quit Chrome first).
 
+**Mac:**
 ```bash
 /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222 --user-data-dir=/tmp/chrome-rym
 ```
+
+**Linux:**
+```bash
+google-chrome --remote-debugging-port=9222 --user-data-dir=/tmp/chrome-rym
+```
+
+> If you get a permission denied error on `/tmp/chrome-rym`, it was likely created by root. Fix with:
+> ```bash
+> sudo rm -rf /tmp/chrome-rym && mkdir /tmp/chrome-rym
+> ```
+> Then run Chrome as your normal user (no sudo).
 
 Log into RYM in that window and load the extension (`chrome://extensions` → Load unpacked → `rym-extension/`).
 
