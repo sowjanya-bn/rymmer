@@ -55,6 +55,22 @@ python3 scripts/rym_import.py
 
 Matches collected albums against tracks in `~/.rymmer/rymmer.db` by artist + title and upserts RYM metadata (`rym_rating`, `rym_rank`, `rym_genres`, `rym_descriptors`, `rym_url`).
 
+## Lightweight browsing (no Playwright)
+
+`rym_open.py` opens album URLs in your default browser tab by tab — no automation framework needed. For each album it opens the artist page first, then the album page, with a random 10–20 s pause between tabs so the extension can collect passively.
+
+```bash
+# Single album
+python3 scripts/rym_open.py https://rateyourmusic.com/release/album/maren-morris/hero/
+
+# Batch from file (one URL per line)
+python3 scripts/rym_open.py --file urls.txt
+```
+
+Requirements: Python 3 stdlib only (no install needed). The extension and local server must be running.
+
+---
+
 ## Automated browsing (batch collection)
 
 To collect a list of albums automatically, use `rym_browse.py`. It opens Chrome, searches for each artist, filters the discography, and clicks through to each album page so the extension can collect.
